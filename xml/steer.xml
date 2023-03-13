@@ -1,0 +1,59 @@
+<marlin>
+    <constants>
+    </constants>
+
+    <execute>
+        <processor name="InitDD4hep" />
+        <processor name="MergeAllHitsRelations"/>
+        <processor name="OverlayDisplayer"/>
+    </execute>
+
+    <global>
+        <parameter name="LCIOInputFiles" type="StringVec">
+            <!-- with overlay -->
+            /nfs/dust/ilc/user/berggren/checktruejetsgv/sgv/test-fullsim/ildstd/v02-02-02/StandardConfig/production/mtau230_dm10_mix55_R80_L30_REC.slcio
+            <!-- without overlay -->
+            /nfs/dust/ilc/user/berggren/checktruejetsgv/sgv/test-fullsim/ildstd/v02-02-02/StandardConfig/production/mtau230_dm10_mix55_R80_L30_noovl_REC.slcio
+        </parameter>
+        <parameter name="MaxRecordNumber" type="int">0</parameter>
+        <parameter name="SkipNEvents" type="int">0</parameter>
+        <parameter name="SupressCheck" type="bool">false</parameter>
+        <parameter name="AllowToModifyEvent" type="bool">false</parameter>
+        <parameter name="RandomSeed" type="int">1234567890</parameter>
+    </global>
+
+    <processor name="InitDD4hep" type="InitializeDD4hep">
+        <parameter name="DD4hepXMLFile" type="string">
+            /cvmfs/ilc.desy.de/sw/x86_64_gcc82_centos7/v02-02-02/lcgeo/v00-16-06/ILD/compact/ILD_l5_v02/ILD_l5_v02.xml
+            <!-- /cvmfs/ilc.desy.de/sw/x86_64_gcc82_centos7/v02-02-03/lcgeo/v00-16-07/ILD/compact/ILD_l5_o1_v02/ILD_l5_o1_v02.xml -->
+        </parameter>
+    </processor>
+
+    <processor name="OverlayDisplayer" type="OverlayDisplayer">
+        <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT" type="string">MESSAGE</parameter>
+        <parameter name="eventDisplay" type="bool">true</parameter>
+    </processor>
+
+
+    <processor name="MergeAllHitsRelations" type="MergeCollections">
+        <parameter name="InputCollections" type="StringVec"> VXDTrackerHitRelations
+                                                            FTDPixelTrackerHitRelations
+                                                            FTDStripTrackerHitRelations
+                                                            SITTrackerHitRelations
+                                                            TPCTrackerHitRelations
+                                                            SETTrackerHitRelations
+                                                            EcalBarrelRelationsSimRec
+                                                            HcalBarrelRelationsSimRec
+                                                            EcalEndcapsRelationsSimRec
+                                                            EcalEndcapRingRelationsSimRec
+                                                            HcalEndcapRingRelationsSimRec
+                                                            HcalEndcapsRelationsSimRec
+                                                            RelationBCalHit
+                                                            RelationLHcalHit
+                                                            RelationLcalHit
+                                                            RelationMuonHit
+        </parameter>
+        <parameter name="OutputCollection" type="string"> AllHitsRelations </parameter>
+    </processor>
+
+</marlin>
